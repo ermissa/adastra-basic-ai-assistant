@@ -1,0 +1,15 @@
+websockets==13.1
+openai==1.101.0
+Django==5.2
+twilio==9.5.2
+python-telegram-bot==22.2
+channels==4.2.2
+dataclasses==0.6
+daphne==4.1.2
+psycopg2==2.9.10
+PyAudio==0.2.14
+requests==2.32.3
+pandas==2.3.2
+python-dotenv==1.1.1
+pylaw==0.0.1
+audioop-lts==0.2.2

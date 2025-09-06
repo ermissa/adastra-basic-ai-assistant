@@ -1,0 +1,16 @@
+version: '3.9'
+
+services: 
+  db:
+    image: postgres:14
+    restart: on-failure
+    container_name: adastra_postgres
+    environment:
+      - POSTGRES_DB=adastradb
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=123456
+      - POSTGRES_HOST=127.0.0.1
+    ports:
+      - "5432:5432"      
+    volumes:
+      - $HOME/docker_volumes/adastra/postgres/data:/var/lib/postgresql/data

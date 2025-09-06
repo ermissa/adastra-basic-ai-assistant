@@ -1,0 +1,10 @@
+Django==5.2
+channels==4.2.2
+daphne==4.1.2
+python-dotenv==1.0.1
+twilio==9.5.2
+websockets==13.1
+torch==2.7.0
+torchaudio==2.7.0
+dotenv
+pandas==2.2.3

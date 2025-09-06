@@ -1,0 +1,28 @@
+@startuml
+actor Customer as C
+participant "Virtual Assistant\n(AI)" as VA
+
+== Greeting ==
+VA -> C: Welcome to Pizzadam!\nWould you like to place an order\nor check the status of an existing one?
+C -> VA: I want to place an order
+
+== Delivery Method ==
+VA -> C: Will you pick it up\nor should we deliver it?
+C -> VA: I'll pick it up
+VA -> C: You'll pick it up from our\nSumatrastraat street Pizzadam branch, right?
+C -> VA: Yes
+
+== Order Details ==
+VA -> C: What would you like to order?
+C -> VA: A pepperoni pizza and a coke
+VA -> C: What size pizza?\nSmall, Medium or Large?
+C -> VA: Medium
+VA -> C: Would you like anything else?
+C -> VA: No, that's all
+
+== Confirmation ==
+VA -> C: Alright, one medium pepperoni pizza\nand one coke. Do you confirm?
+C -> VA: Yes, I confirm
+VA -> C: Thank you! Have a great day!
+
+@enduml

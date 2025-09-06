@@ -1,0 +1,7 @@
+{
+  "black-formatter.args": ["--line-length", "150"],
+  "[python]": {
+    "editor.formatOnSave": true
+  },
+  "editor.formatOnSave": false,  // diğer tüm diller için kapalı
+}

@@ -1,0 +1,129 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://kit.fontawesome.com/391827d54c.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="{% static 'whatsapp_ui/styles.css' %}">
+  <title>Call Conversations</title>
+</head>
+<body>
+  <div class="background-green"></div>
+  
+ 
+  <div class="main-container">
+    <div class="left-container">
+      
+<!--header -->
+      <div class="header">
+        <div class="user-img">
+          <img class="dp" src="{% static 'whatsapp_ui/adastra-40x40.png' %}" alt="Adastra">
+        </div>   
+        <div class="nav-icons">
+          <li><i class="fa-solid fa-users"></i></li>
+          <li><i class="fa-solid fa-message">
+ </i></li>
+          <li><i class="fa-solid fa-ellipsis-vertical"></i></li>
+        </div>
+      </div>
+      
+      
+<!--notification -->
+      <div class="notif-box">
+        <i class="fa-solid fa-bell-slash"></i>
+        <div class="notif-text">
+             <p>Call Sessions</p>
+             <a href="#">Review voice conversations ›</a>
+            </div>
+        <i class="fa-solid fa-xmark"></i>
+      </div>
+      
+<!--search-container -->
+      <div class="search-container">
+        <div class="input"> 
+<i class="fa-solid fa-magnifying-glass"></i>
+          <input type="text" placeholder="Search sessions..."></div>
+     <i class="fa-sharp fa-solid fa-bars-filter"></i>  
+      </div>
+      
+      
+<!--chats -->      
+      <div class="chat-list">
+        {% for session in call_sessions %}
+        <div class="chat-box {% if session.call_session_id == current_session_id %}active{% endif %}" 
+             onclick="location.href='{% url 'voice_assistant:call_conversation' session.call_session_id %}'">
+          <div class="img-box">
+            <img class="img-cover" src="{% static 'whatsapp_ui/ai-agent.jpg' %}" alt="AI Agent">
+          </div>
+          <div class="chat-details">
+            <div class="text-head">
+              <h4>{{ session.call_session_id|truncatechars:10 }}</h4>
+              <p class="time">{{ session.latest_message_time|date:"H:i" }}</p>
+            </div>
+            <div class="text-message">
+              <p>{{ session.latest_message|truncatechars:30 }}</p>
+              {% if session.message_count %}
+              <b>{{ session.message_count }}</b>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+        {% empty %}
+        <div class="chat-box">
+          <div class="chat-details">
+            <div class="text-head">
+              <h4>No sessions found</h4>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div> 
+      
+    </div>
+    
+
+    
+    <div class="right-container">
+<!--header -->
+      <div class="header">
+        <div class="img-text">
+          <div class="user-img">
+          <img class="dp" src="{% static 'whatsapp_ui/ai-agent.jpg' %}" alt="AI Agent">
+        </div>
+          <h4>{{ current_session_id|default:"Select a session" }}<br><span>{% if messages %}{{ messages|length }} messages{% else %}No conversation{% endif %}</span></h4>
+        </div>
+        <div class="nav-icons">
+          <li><i class="fa-solid fa-magnifying-glass"></i></li>
+          <li><i class="fa-solid fa-ellipsis-vertical"></i></li>
+        </div>
+      </div>
+    
+<!--chat-container -->
+      <div class="chat-container">
+        {% if messages %}
+          {% for message in messages %}
+            <div class="message-box {% if message.is_user %}friend-message{% else %}my-message{% endif %}">
+              <p>{{ message.content }}<br><span>{{ message.created_at|date:"H:i" }}</span></p>
+            </div>
+          {% endfor %}
+        {% else %}
+          <div class="message-box my-message">
+            <p>No messages in this conversation.<br><span>--:--</span></p>
+          </div>
+        {% endif %}
+      </div>
+      
+<!--input-bottom -->
+      <div class="chatbox-input">
+        <i class="fa-regular fa-face-grin"></i>
+        <i class="fa-sharp fa-solid fa-paperclip"></i>
+        <input type="text" placeholder="View only - messages are from call recordings" readonly>
+        <i class="fa-solid fa-microphone"></i>
+      </div>
+    </div>
+    
+  </div> 
+</body>
+</html>
