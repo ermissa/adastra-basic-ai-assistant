@@ -246,10 +246,13 @@ class OpenAIService:
 
     async def end_call(
         self,
+        message: str = "Thank you for calling. Goodbye!",
     ):
-        """Kullanıcıya vedayı iletip ardından Twilio aramasını sonlandır."""
+        """Kullanıcıya vedayı iletip ardından Twilio aramasını sonlandır.
+
+        message: Konuşma bitmeden önce söylenecek metin.
+        """
         try:
-            message: str = "Thank you for calling. Goodbye!"
             # 1. Kullanıcıya mesajı söylet
             # await self.websocket.send(json.dumps({
             #     "type": "conversation.item.create",

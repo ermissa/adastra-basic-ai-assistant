@@ -38,8 +38,8 @@ class CallOrchestrator:
         self.is_twillio_printed = False
         self.call_start_time = None
         self.call_timer_task = None
-        # 2 minutes in seconds
-        self.max_call_duration = 120
+        # Max call duration in seconds (shortened for testing)
+        self.max_call_duration = 25
         self._timer_ended_call = False
 
     async def start(self):
@@ -240,6 +240,14 @@ class CallOrchestrator:
                 call_duration = time.time() - self.call_start_time if self.call_start_time else 0
                 logger.warning(f"Call exceeded maximum duration of {self.max_call_duration} seconds (actual: {call_duration:.1f}s). Ending call.")
                 self._timer_ended_call = True
+                # Politely inform the caller before ending the call
+                try:
+                    await self.openai_service.end_call(
+                        message="Konuşma süresi bitmiştir, aramayı sonlandırıyorum. İyi günler."
+                    )
+                except Exception as e:
+                    logger.error(f"Failed to send timeout farewell before hangup: {str(e)}")
+                # Proceed with shutdown/cleanup
                 await self.shutdown()
         except asyncio.CancelledError:
             logger.info("Call timer cancelled (call ended normally)")
